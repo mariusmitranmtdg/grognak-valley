@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 @onready var msm = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
+@onready var tsm = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
 
 var direction: Vector2
 var speed := 50
+var current_tool: Enum.Tool = Enum.Tool.AXE
 
 func move():
 	direction = Input.get_vector("left", "right", "up", "down")
@@ -11,7 +13,13 @@ func move():
 	move_and_slide()
 
 func get_basic_input():
+	if Input.is_action_just_pressed("tool_backward") or Input.is_action_just_pressed("tool_forward"):
+		var dir = Input.get_axis("tool_backward", "tool_forward")
+		current_tool = posmod((current_tool + int(dir)), Enum.Tool.size())
+		
+		print(current_tool)
 	if Input.is_action_just_pressed("action"):
+		tsm.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func animate():
