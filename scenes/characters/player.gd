@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var tsm = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
 
 var direction: Vector2
+var last_direction: Vector2
 var speed := 50
 var current_tool: Enum.Tool
 var current_seed: Enum.Seed
@@ -24,11 +25,10 @@ func get_basic_input():
 	
 	if Input.is_action_just_pressed("seed_forward"):
 		current_seed = posmod(current_seed + 1, Enum.Seed.size()) as Enum.Seed
-		print(current_seed)
 	if Input.is_action_just_pressed("action"):
 		tsm.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-		tool_use.emit(current_tool, position)
+
 
 func animate():
 	if direction:
@@ -43,13 +43,15 @@ func animate():
 		msm.travel("Idle")
 
 func tool_use_emit():
-	pass
+	tool_use.emit(current_tool, position + last_direction * 16 + Vector2(0, 4))
 
 func _physics_process(_delta: float) -> void:
 	if can_move:
 		get_basic_input()
 		move()
 		animate()
+	if direction:
+		last_direction = direction
 
 
 func _on_animation_tree_animation_started(_anim_name: StringName) -> void:

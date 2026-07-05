@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="2_b2cq8"]
 [ext_resource type="Texture2D" uid="uid://cpjr8yl2yentc" path="res://graphics/tilesets/soil.png" id="2_xb4v1"]
 [ext_resource type="Texture2D" uid="uid://b1cmu3aai85qc" path="res://graphics/tilesets/grass.png" id="3_b2cq8"]
+[ext_resource type="Texture2D" uid="uid://vrdy2gp08qay" path="res://graphics/tilesets/soil_water.png" id="5_d4w6o"]
+[ext_resource type="PackedScene" uid="uid://d2530w2lrixv4" path="res://scenes/objects/tree.tscn" id="7_mbbpy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_urvlt"]
 texture = ExtResource("1_xb4v1")
@@ -111,6 +113,7 @@ texture = ExtResource("3_b2cq8")
 1:1/0/terrains_peering_bit/top_left_corner = 0
 1:1/0/terrains_peering_bit/top_side = 0
 1:1/0/terrains_peering_bit/top_right_corner = 0
+1:1/0/custom_data_0 = true
 2:1/0 = 0
 2:1/0/terrain_set = 0
 2:1/0/terrain = 0
@@ -338,6 +341,7 @@ texture = ExtResource("3_b2cq8")
 0:4/0/terrains_peering_bit/top_left_corner = 0
 0:4/0/terrains_peering_bit/top_side = 0
 0:4/0/terrains_peering_bit/top_right_corner = 0
+0:4/0/custom_data_0 = true
 1:4/0 = 0
 1:4/0/terrain_set = 0
 1:4/0/terrain = 0
@@ -350,6 +354,7 @@ texture = ExtResource("3_b2cq8")
 1:4/0/terrains_peering_bit/top_left_corner = 0
 1:4/0/terrains_peering_bit/top_side = 0
 1:4/0/terrains_peering_bit/top_right_corner = 0
+1:4/0/custom_data_0 = true
 2:4/0 = 0
 2:4/0/terrain_set = 0
 2:4/0/terrain = 0
@@ -362,6 +367,7 @@ texture = ExtResource("3_b2cq8")
 2:4/0/terrains_peering_bit/top_left_corner = 0
 2:4/0/terrains_peering_bit/top_side = 0
 2:4/0/terrains_peering_bit/top_right_corner = 0
+2:4/0/custom_data_0 = true
 3:4/0 = 0
 3:4/0/terrain_set = 0
 3:4/0/terrain = 0
@@ -374,6 +380,7 @@ texture = ExtResource("3_b2cq8")
 3:4/0/terrains_peering_bit/top_left_corner = 0
 3:4/0/terrains_peering_bit/top_side = 0
 3:4/0/terrains_peering_bit/top_right_corner = 0
+3:4/0/custom_data_0 = true
 4:4/0 = 0
 4:4/0/terrain_set = 0
 4:4/0/terrain = 0
@@ -418,6 +425,8 @@ physics_layer_0/collision_mask = 0
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Grass"
 terrain_set_0/terrain_0/color = Color(0.124189265, 0.45919383, 0.21607158, 1)
+custom_data_layer_0/name = "farmable"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_xb4v1")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b2cq8"]
@@ -806,6 +815,15 @@ terrain_set_0/terrain_0/name = "Soil"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_b2cq8")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mbbpy"]
+texture = ExtResource("5_d4w6o")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_sn0t7"]
+sources/0 = SubResource("TileSetAtlasSource_mbbpy")
+
 [node name="Level" type="Node2D" unique_id=166721873]
 script = ExtResource("1_urvlt")
 
@@ -823,8 +841,15 @@ tile_set = SubResource("TileSet_urvlt")
 tile_map_data = PackedByteArray("AAD9/wEAAAAAAAIAAAD9/wAAAAAGAAEAAAD8/wAAAAAAAAIAAAD8////AAAAAAAAAAD9////AAAGAAIAAAD9//7/AAAAAAAAAAD+//7/AAABAAAAAAD///3/AAAAAAAAAAAAAP3/AAABAAAAAAABAP3/AAABAAAAAAACAP3/AAABAAAAAAADAP3/AAABAAAAAAAEAP3/AAACAAAAAAAEAP7/AAACAAEAAAAEAP//AAACAAEAAAADAAAAAAAFAAEAAAADAAEAAAACAAIAAAACAAEAAAABAAIAAAABAAEAAAABAAIAAAAAAAEAAAABAAIAAAD//wEAAAABAAIAAAD+/wEAAAABAAIAAAD+////AAACAAQAAAD/////AAABAAEAAAD///7/AAAGAAIAAAAAAP7/AAABAAEAAAABAP7/AAABAAEAAAACAP7/AAABAAEAAAADAP7/AAABAAEAAAAEAAAAAAACAAIAAAD+/wAAAAABAAEAAAACAAAAAAACAAQAAAABAAAAAAABAAEAAAAAAAAAAAABAAQAAAD//wAAAAADAAQAAAADAP//AAABAAEAAAACAP//AAABAAEAAAAAAP//AAABAAEAAAABAP//AAACAAQAAAA=")
 tile_set = SubResource("TileSet_bhunq")
 
+[node name="WateredSoilMapLayer" type="TileMapLayer" parent="Layers" unique_id=1928488293]
+modulate = Color(1, 1, 1, 0.45882353)
+tile_set = SubResource("TileSet_sn0t7")
+
 [node name="Objects" type="Node2D" parent="." unique_id=2116810164]
 y_sort_enabled = true
+
+[node name="Tree" parent="Objects" unique_id=1952798943 instance=ExtResource("7_mbbpy")]
+position = Vector2(-91, -81)
 
 [node name="Player" parent="Objects" unique_id=1123825297 instance=ExtResource("2_b2cq8")]
 

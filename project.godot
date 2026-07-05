@@ -29,6 +29,10 @@ Data="*res://global/data.gd"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 
+[global_group]
+
+Objects=""
+
 [input]
 
 ui_left={
