@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://d158imc22rl57"]
+
+[ext_resource type="Script" uid="uid://dxyq6avlcieg" path="res://scenes/characters/blob.gd" id="1_xa0uo"]
+[ext_resource type="PackedScene" uid="uid://5tstrk7yxbre" path="res://vfx/flash_sprite_2d.tscn" id="2_50kq6"]
+[ext_resource type="Texture2D" uid="uid://b466fqj7w4mne" path="res://graphics/characters/blob.png" id="2_n17ut"]
+[ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="3_pjcp6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nlap5"]
+resource_local_to_scene = true
+shader = ExtResource("3_pjcp6")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_riqys"]
+radius = 5.0990195
+
+[sub_resource type="Animation" id="Animation_mt6qh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_1oscj"]
+resource_name = "explode"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [10, 13]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_gsie5"]
+resource_name = "idle"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_py8ow"]
+resource_name = "move"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 53.817333),
+"update": 0,
+"values": [2, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6m7xw"]
+_data = {
+&"RESET": SubResource("Animation_mt6qh"),
+&"explode": SubResource("Animation_1oscj"),
+&"idle": SubResource("Animation_gsie5"),
+&"move": SubResource("Animation_py8ow")
+}
+
+[node name="Blob" type="CharacterBody2D" unique_id=466769426 groups=["ObjectsS"]]
+collision_layer = 4
+script = ExtResource("1_xa0uo")
+
+[node name="FlashSprite2D" parent="." unique_id=23185921 instance=ExtResource("2_50kq6")]
+material = SubResource("ShaderMaterial_nlap5")
+texture = ExtResource("2_n17ut")
+hframes = 14
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1118361961]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_riqys")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1780770756]
+libraries/ = SubResource("AnimationLibrary_6m7xw")
+autoplay = &"move"

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b1cmu3aai85qc" path="res://graphics/tilesets/grass.png" id="3_b2cq8"]
 [ext_resource type="Texture2D" uid="uid://vrdy2gp08qay" path="res://graphics/tilesets/soil_water.png" id="5_d4w6o"]
 [ext_resource type="PackedScene" uid="uid://d2530w2lrixv4" path="res://scenes/objects/tree.tscn" id="7_mbbpy"]
+[ext_resource type="PackedScene" uid="uid://d158imc22rl57" path="res://scenes/characters/blob.tscn" id="8_ouxo3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_urvlt"]
 texture = ExtResource("1_xb4v1")
@@ -852,5 +853,8 @@ y_sort_enabled = true
 position = Vector2(-91, -81)
 
 [node name="Player" parent="Objects" unique_id=1123825297 instance=ExtResource("2_b2cq8")]
+
+[node name="Blob" parent="Objects" unique_id=466769426 instance=ExtResource("8_ouxo3")]
+position = Vector2(77, 0)
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

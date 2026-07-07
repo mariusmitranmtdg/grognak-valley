@@ -33,4 +33,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				if object.position.distance_to(pos) < 20:
 					object.hit(tool)
 		Enum.Tool.SWORD:
-			pass
+			for object in get_tree().get_nodes_in_group('ObjectsS'):
+				print(object.position.distance_to(pos))
+				if object.position.distance_to(pos) < 20:
+					object.hit(tool)

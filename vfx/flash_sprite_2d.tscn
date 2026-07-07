@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://5tstrk7yxbre"]
+
+[ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="1_vpgnx"]
+[ext_resource type="Script" uid="uid://8xgmcal80053" path="res://vfx/flash_sprite_2d.gd" id="1_vt01l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ew4q"]
+resource_local_to_scene = true
+shader = ExtResource("1_vpgnx")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vpgnx"]
+resource_local_to_scene = true
+load_path = "res://.godot/imported/apple.png-073e770fc8003da44fece595a2dee5e7.ctex"
+
+[node name="FlashSprite2D" type="Sprite2D" unique_id=23185921]
+material = SubResource("ShaderMaterial_1ew4q")
+texture = SubResource("CompressedTexture2D_vpgnx")
+script = ExtResource("1_vt01l")

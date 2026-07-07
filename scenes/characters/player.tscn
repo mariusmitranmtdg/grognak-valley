@@ -1561,7 +1561,7 @@ texture = ExtResource("3_6eyoc")
 hframes = 33
 vframes = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=436730995]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=436730995 groups=["Player"]]
 shape = SubResource("CapsuleShape2D_atpat")
 
 [node name="Animation" type="Node" parent="." unique_id=150622088]
