@@ -1552,6 +1552,7 @@ nodes/ToolOneShot/position = Vector2(80, -256)
 node_connections = [&"output", 0, &"ToolOneShot", &"ToolOneShot", 0, &"MoveStateMachine", &"ToolOneShot", 1, &"ToolStateMachine"]
 
 [node name="Player" type="CharacterBody2D" unique_id=535267607]
+y_sort_enabled = true
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_76oj4")
