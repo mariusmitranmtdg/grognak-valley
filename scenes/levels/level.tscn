@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://vrdy2gp08qay" path="res://graphics/tilesets/soil_water.png" id="5_d4w6o"]
 [ext_resource type="PackedScene" uid="uid://d2530w2lrixv4" path="res://scenes/objects/tree.tscn" id="7_mbbpy"]
 [ext_resource type="PackedScene" uid="uid://vem02mh7silc" path="res://scenes/objects/simple_object.tscn" id="9_icy5c"]
+[ext_resource type="Shader" uid="uid://2dfugyjih0oe" path="res://shaders/circle_transition.gdshader" id="9_rmjfq"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
 offsets = PackedFloat32Array(0, 0.27659574, 0.5106383, 1)
@@ -829,6 +830,10 @@ texture = ExtResource("5_d4w6o")
 [sub_resource type="TileSet" id="TileSet_sn0t7"]
 sources/0 = SubResource("TileSetAtlasSource_mbbpy")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ouxo3"]
+shader = ExtResource("9_rmjfq")
+shader_parameter/progress = 0.0
+
 [node name="Level" type="Node2D" unique_id=166721873]
 y_sort_enabled = true
 script = ExtResource("1_urvlt")
@@ -907,6 +912,17 @@ style = 1
 [node name="Overlay" type="Node2D" parent="." unique_id=1029971097]
 
 [node name="DayTimeColor" type="CanvasModulate" parent="Overlay" unique_id=1586166284]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Overlay" unique_id=1720027154]
+
+[node name="DayTransitionLayer" type="ColorRect" parent="Overlay/CanvasLayer" unique_id=885167245]
+material = SubResource("ShaderMaterial_ouxo3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.11858138, 0.11858138, 0.11858138, 1)
 
 [node name="Timers" type="Node2D" parent="." unique_id=175593646]
 
