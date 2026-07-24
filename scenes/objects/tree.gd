@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 const apple_texture = preload("res://graphics/plants/apple.png")
-var hp := 3:
+var hp:
 	set(value):
 		hp = value
 		if hp <= 0:
@@ -11,7 +11,7 @@ var hp := 3:
 			shape.size = Vector2(12, 6)
 			$CollisionShape2D.shape = shape
 			$CollisionShape2D.position.y += 8
-			
+
 
 func _ready() -> void:
 	create_apples(3)
@@ -34,3 +34,10 @@ func create_apples(num: int):
 		sprite.texture = apple_texture
 		$Apples.add_child(sprite)
 		sprite.position = cur_marker.position
+	hp = num * 2
+
+func _on_level_day_restarted() -> void:
+	if hp:
+		for apple in $Apples.get_children():
+			apple.queue_free()
+		create_apples(3)

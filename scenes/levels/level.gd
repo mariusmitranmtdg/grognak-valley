@@ -4,6 +4,9 @@ var plant_scene = preload("res://scenes/objects/plant.tscn")
 var used_cells: Array[Vector2i]
 
 @export var daytime_color: Gradient
+@onready var daytransition_material = $Overlay/CanvasLayer/DayTransitionLayer.material
+
+signal day_restarted()
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 	var grid_coord: Vector2i = Vector2i (pos.x/Data.TILE_SIZE, pos.y/Data.TILE_SIZE)
@@ -44,3 +47,17 @@ func _process(delta: float) -> void:
 	var daytime_point = 1 - ($Timers/DayTimer.time_left / $Timers/DayTimer.wait_time)
 	var color = daytime_color.sample(daytime_point)
 	$Overlay/DayTimeColor.color = color
+	if Input.is_action_just_pressed("day_change"):
+		day_restart()
+
+func day_restart():
+	var tween = create_tween()
+	tween.tween_property(daytransition_material, "shader_parameter/progress", 1.0, 1.0)
+	tween.tween_interval(0.5)
+	tween.tween_callback(level_reset)
+	tween.tween_property(daytransition_material, "shader_parameter/progress", 0.0, 1.0)
+
+func level_reset():
+	day_restarted.emit()
+	$Timers/DayTimer.start()
+	pass
