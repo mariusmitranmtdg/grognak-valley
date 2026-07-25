@@ -1,10 +1,27 @@
 extends StaticBody2D
 
 var coord: Vector2i
+@export var res: PlantResource
 
-func setup(grid_coord: Vector2i, parent: Node2D):
-	var salurrr = Vector2i (floor(grid_coord.x/Data.TILE_SIZE), floor(grid_coord.y/Data.TILE_SIZE))
+signal death(coords: Vector2i)
+
+func setup(grid_coord: Vector2i, parent: Node2D, plant_res: PlantResource):
+	res = plant_res
 	position = grid_coord * Data.TILE_SIZE + Vector2i(8, -5)
-	print(salurrr)
 	parent.add_child(self)
 	coord = grid_coord
+	$FlashSprite2D.texture = res.texture
+
+func grow(watered: bool):
+	if watered:
+		res.grow($FlashSprite2D)
+	else:
+		res.decay(self)
+
+
+func _on_collection_area_body_entered(body: Node2D) -> void:
+	if res.get_complete():
+		death.emit(coord)
+		res.is_dead = true
+		$FlashSprite2D.flash(0.2, 0.4, queue_free)
+		

@@ -1,6 +1,8 @@
 extends Node2D
 
 var plant_scene = preload("res://scenes/objects/plant.tscn")
+var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
+
 var used_cells: Array[Vector2i]
 
 @export var daytime_color: Gradient
@@ -29,9 +31,16 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				print('peste!')
 		Enum.Tool.SEED:
 			if has_soil and grid_coord not in used_cells:
+				var plant_res = PlantResource.new()
+				plant_res.setup($Objects/Player.current_seed)
 				var plant = plant_scene.instantiate()
-				plant.setup(grid_coord, $Objects)
+				plant.death.connect(_on_plant_death)
+				plant.setup(grid_coord, $Objects, plant_res)
 				used_cells.append(grid_coord)
+				
+				var plant_info = plant_info_scene.instantiate()
+				plant_info.setup(plant_res)
+				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
 		Enum.Tool.AXE:
 			for object in get_tree().get_nodes_in_group('Objects'):
 				print(object.position.distance_to(pos))
@@ -60,4 +69,15 @@ func day_restart():
 func level_reset():
 	day_restarted.emit()
 	$Timers/DayTimer.start()
-	pass
+	for plant in get_tree().get_nodes_in_group("Plants"):
+		plant.grow(plant.coord in $Layers/WateredSoilMapLayer.get_used_cells())
+	$Layers/WateredSoilMapLayer.clear()
+	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
+
+func _on_plant_death(coord: Vector2i):
+	used_cells.erase(coord)
+	
+
+
+func _on_player_diagnose() -> void:
+	$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible

@@ -1,21 +1,49 @@
 [gd_scene format=3 uid="uid://boqy2w11hcfuy"]
 
 [ext_resource type="Script" uid="uid://q6wc61h7fvet" path="res://scenes/objects/plant.gd" id="1_fvfks"]
-[ext_resource type="Texture2D" uid="uid://b41e01wg87oo5" path="res://graphics/plants/wheat.png" id="1_re4db"]
+[ext_resource type="Script" uid="uid://datkbfshnxk7k" path="res://resources/plant_resource.gd" id="2_0a33w"]
+[ext_resource type="Texture2D" uid="uid://cnur3o7y688kk" path="res://graphics/plants/tomato.png" id="3_yb5fs"]
+[ext_resource type="PackedScene" uid="uid://5tstrk7yxbre" path="res://vfx/flash_sprite_2d.tscn" id="4_whlcx"]
+[ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="5_e08kw"]
+
+[sub_resource type="Resource" id="Resource_fvfks"]
+script = ExtResource("2_0a33w")
+texture = ExtResource("3_yb5fs")
+metadata/_custom_type_script = "uid://datkbfshnxk7k"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yb5fs"]
+resource_local_to_scene = true
+shader = ExtResource("5_e08kw")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fvfks"]
 radius = 3.0
 height = 6.0
 
-[node name="Plant" type="StaticBody2D" unique_id=2027125716]
+[sub_resource type="CircleShape2D" id="CircleShape2D_g4v7s"]
+radius = 13.038404
+
+[node name="Plant" type="StaticBody2D" unique_id=2027125716 groups=["Plants"]]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_fvfks")
+res = SubResource("Resource_fvfks")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2070187558]
-texture = ExtResource("1_re4db")
+[node name="FlashSprite2D" parent="." unique_id=23185921 instance=ExtResource("4_whlcx")]
+material = SubResource("ShaderMaterial_yb5fs")
 hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457242486]
-position = Vector2(1, 13)
+position = Vector2(0, 13)
 shape = SubResource("CapsuleShape2D_fvfks")
+
+[node name="CollectionArea" type="Area2D" parent="." unique_id=958041914]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea" unique_id=1991592485]
+position = Vector2(0, 13)
+shape = SubResource("CircleShape2D_g4v7s")
+
+[connection signal="body_entered" from="CollectionArea" to="." method="_on_collection_area_body_entered"]

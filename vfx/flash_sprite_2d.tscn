@@ -9,11 +9,6 @@ shader = ExtResource("1_vpgnx")
 shader_parameter/Color = Color(1, 1, 1, 1)
 shader_parameter/Progress = 0.0
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vpgnx"]
-resource_local_to_scene = true
-load_path = "res://.godot/imported/apple.png-073e770fc8003da44fece595a2dee5e7.ctex"
-
 [node name="FlashSprite2D" type="Sprite2D" unique_id=23185921]
 material = SubResource("ShaderMaterial_1ew4q")
-texture = SubResource("CompressedTexture2D_vpgnx")
 script = ExtResource("1_vt01l")

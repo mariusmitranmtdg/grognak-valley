@@ -10,7 +10,7 @@ var current_tool: Enum.Tool
 var current_seed: Enum.Seed
 var can_move: bool = true
 
-
+signal diagnose
 signal tool_use(tool: Enum.Tool, pos:Vector2)
 
 func move():
@@ -23,9 +23,12 @@ func get_basic_input():
 		var dir = Input.get_axis("tool_backward", "tool_forward")
 		current_tool = posmod((current_tool + int(dir)), Enum.Tool.size()) as Enum.Tool
 		$ToolUI.reveal()
-	
 	if Input.is_action_just_pressed("seed_forward"):
 		current_seed = posmod(current_seed + 1, Enum.Seed.size()) as Enum.Seed
+		$SeedsUI.reveal()
+	if Input.is_action_just_pressed("diagnose"):
+		diagnose.emit()
+
 	if Input.is_action_just_pressed("action"):
 		tsm.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
