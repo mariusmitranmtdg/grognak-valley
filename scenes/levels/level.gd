@@ -2,9 +2,14 @@ extends Node2D
 
 var plant_scene = preload("res://scenes/objects/plant.tscn")
 var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
-
+var raining: bool:
+	set(value):
+		raining = value
+		$Layers/Particles/GPUParticles2D.emitting = value
+		$Layers/Particles/GPUParticles2D2.emitting = value
 var used_cells: Array[Vector2i]
 
+@export var rain_color: Color
 @export var daytime_color: Gradient
 @onready var daytransition_material = $Overlay/CanvasLayer/DayTransitionLayer.material
 
@@ -54,8 +59,14 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 
 func _process(delta: float) -> void:
 	var daytime_point = 1 - ($Timers/DayTimer.time_left / $Timers/DayTimer.wait_time)
-	var color = daytime_color.sample(daytime_point)
+	var color: Color
+	
+	if raining:
+		color = daytime_color.sample(daytime_point).lerp(rain_color, 0.5)
+	else:
+		color = daytime_color.sample(daytime_point)
 	$Overlay/DayTimeColor.color = color
+	
 	if Input.is_action_just_pressed("day_change"):
 		day_restart()
 
@@ -73,6 +84,7 @@ func level_reset():
 		plant.grow(plant.coord in $Layers/WateredSoilMapLayer.get_used_cells())
 	$Layers/WateredSoilMapLayer.clear()
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
+	raining = [true, false].pick_random()
 
 func _on_plant_death(coord: Vector2i):
 	used_cells.erase(coord)
