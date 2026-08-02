@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://vem02mh7silc" path="res://scenes/objects/simple_object.tscn" id="9_icy5c"]
 [ext_resource type="Shader" uid="uid://2dfugyjih0oe" path="res://shaders/circle_transition.gdshader" id="9_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://gxfhn8vu2d0l" path="res://scenes/ui/plant_info_container.tscn" id="10_rmjfq"]
+[ext_resource type="PackedScene" uid="uid://cqhykhx23v1su" path="res://scenes/levels/house.tscn" id="13_qogh7"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
 offsets = PackedFloat32Array(0, 0.27659574, 0.5106383, 1)
@@ -870,9 +871,13 @@ shader = ExtResource("9_rmjfq")
 shader_parameter/progress = 0.0
 
 [node name="Level" type="Node2D" unique_id=166721873]
+y_sort_enabled = true
 script = ExtResource("1_urvlt")
 rain_color = Color(0.08203913, 0.08203913, 0.08203913, 1)
 daytime_color = SubResource("Gradient_icy5c")
+
+[node name="House" parent="." unique_id=1566812072 instance=ExtResource("13_qogh7")]
+position = Vector2(-4, -259)
 
 [node name="Layers" type="Node2D" parent="." unique_id=1526438390]
 
@@ -897,8 +902,12 @@ z_index = -2
 tile_set = SubResource("TileSet_sn0t7")
 
 [node name="Particles" type="Node2D" parent="Layers" unique_id=1109167477]
+z_index = -1
+y_sort_enabled = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Layers/Particles" unique_id=1870374878]
+z_index = -1
+y_sort_enabled = true
 material = SubResource("CanvasItemMaterial_yf5fn")
 emitting = false
 amount = 100
@@ -906,6 +915,8 @@ texture = ExtResource("6_7pb6i")
 process_material = SubResource("ParticleProcessMaterial_g4v7s")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="Layers/Particles" unique_id=758320988]
+z_index = 3
+y_sort_enabled = true
 material = SubResource("CanvasItemMaterial_57qmd")
 emitting = false
 amount = 100
@@ -913,12 +924,15 @@ texture = ExtResource("7_xfk5q")
 process_material = SubResource("ParticleProcessMaterial_yf5fn")
 
 [node name="Objects" type="Node2D" parent="." unique_id=2116810164]
-z_as_relative = false
+y_sort_enabled = true
 
 [node name="Player" parent="Objects" unique_id=1123825297 instance=ExtResource("2_b2cq8")]
+z_index = 1
 position = Vector2(67, -16)
 
 [node name="SimpleObjects" type="Node2D" parent="Objects" unique_id=237900989]
+z_index = 1
+y_sort_enabled = true
 
 [node name="SimpleObject" parent="Objects/SimpleObjects" unique_id=1954370222 instance=ExtResource("9_icy5c")]
 position = Vector2(-100, -19)
@@ -1008,6 +1022,8 @@ size = 1
 style = 1
 
 [node name="Trees" type="Node2D" parent="Objects" unique_id=1785567792]
+z_index = 1
+y_sort_enabled = true
 
 [node name="Tree" parent="Objects/Trees" unique_id=1952798943 instance=ExtResource("7_mbbpy")]
 position = Vector2(-91, -81)
@@ -1017,9 +1033,6 @@ position = Vector2(-252, -170)
 
 [node name="Tree3" parent="Objects/Trees" unique_id=877396793 instance=ExtResource("7_mbbpy")]
 position = Vector2(-148, -246)
-
-[node name="Tree4" parent="Objects/Trees" unique_id=1850834729 instance=ExtResource("7_mbbpy")]
-position = Vector2(-45, -166)
 
 [node name="Tree5" parent="Objects/Trees" unique_id=133785370 instance=ExtResource("7_mbbpy")]
 position = Vector2(-158, -143)
@@ -1057,20 +1070,11 @@ position = Vector2(103, 28)
 [node name="Tree18" parent="Objects/Trees" unique_id=408384959 instance=ExtResource("7_mbbpy")]
 position = Vector2(1, -111)
 
-[node name="Tree19" parent="Objects/Trees" unique_id=98626111 instance=ExtResource("7_mbbpy")]
-position = Vector2(135, -199)
-
-[node name="Tree20" parent="Objects/Trees" unique_id=1729365520 instance=ExtResource("7_mbbpy")]
-position = Vector2(49, -208)
-
 [node name="Tree21" parent="Objects/Trees" unique_id=344311558 instance=ExtResource("7_mbbpy")]
 position = Vector2(141, -93)
 
 [node name="Tree22" parent="Objects/Trees" unique_id=1553634314 instance=ExtResource("7_mbbpy")]
 position = Vector2(331, -252)
-
-[node name="Tree23" parent="Objects/Trees" unique_id=860094059 instance=ExtResource("7_mbbpy")]
-position = Vector2(238, -262)
 
 [node name="Tree24" parent="Objects/Trees" unique_id=1128609408 instance=ExtResource("7_mbbpy")]
 position = Vector2(278, -139)

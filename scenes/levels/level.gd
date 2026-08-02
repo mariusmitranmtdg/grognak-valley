@@ -26,6 +26,8 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 			if cell:
 				if cell.get_custom_data('farmable'):
 					$Layers/SoilMapLayer.set_cells_terrain_connect([grid_coord], 0, 0)
+					if raining:
+						$Layers/WateredSoilMapLayer.set_cell(grid_coord, 0, Vector2i(randi_range(0, 2), 0))
 			print(pos, grid_coord)
 		Enum.Tool.WATER:
 			if has_soil:
@@ -57,6 +59,9 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				if object.position.distance_to(pos) < 20:
 					object.hit(tool)
 
+func _ready() -> void:
+	Data.forecast_rain = [true, false].pick_random()
+
 func _process(delta: float) -> void:
 	var daytime_point = 1 - ($Timers/DayTimer.time_left / $Timers/DayTimer.wait_time)
 	var color: Color
@@ -84,7 +89,13 @@ func level_reset():
 		plant.grow(plant.coord in $Layers/WateredSoilMapLayer.get_used_cells())
 	$Layers/WateredSoilMapLayer.clear()
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
-	raining = [true, false].pick_random()
+	raining = Data.forecast_rain
+	Data.forecast_rain = [true, false].pick_random()
+	print("rain" if Data.forecast_rain else "sunny")
+	if raining:
+		for cell in $Layers/SoilMapLayer.get_used_cells():
+			$Layers/WateredSoilMapLayer.set_cell(cell, 0, Vector2i(randi_range(0, 2), 0))
+
 
 func _on_plant_death(coord: Vector2i):
 	used_cells.erase(coord)
