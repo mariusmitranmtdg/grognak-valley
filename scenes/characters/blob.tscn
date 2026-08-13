@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b466fqj7w4mne" path="res://graphics/characters/blob.png" id="2_n17ut"]
 [ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="3_pjcp6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nlap5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xa0uo"]
 resource_local_to_scene = true
 shader = ExtResource("3_pjcp6")
 shader_parameter/Color = Color(1, 1, 1, 1)
@@ -101,12 +101,12 @@ _data = {
 &"move": SubResource("Animation_py8ow")
 }
 
-[node name="Blob" type="CharacterBody2D" unique_id=466769426 groups=["ObjectsS"]]
+[node name="Blob" type="CharacterBody2D" unique_id=466769426 groups=["Enemies", "ObjectsS"]]
 collision_layer = 4
 script = ExtResource("1_xa0uo")
 
 [node name="FlashSprite2D" parent="." unique_id=23185921 instance=ExtResource("2_50kq6")]
-material = SubResource("ShaderMaterial_nlap5")
+material = SubResource("ShaderMaterial_xa0uo")
 texture = ExtResource("2_n17ut")
 hframes = 14
 vframes = 4

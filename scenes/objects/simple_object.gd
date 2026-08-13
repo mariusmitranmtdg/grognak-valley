@@ -18,9 +18,6 @@ func _ready() -> void:
 	$CollisionShape2D.disabled = size < 2
 	z_index = -1 if size < 2 else 0
 
-func _process(delta: float) -> void:
-	pass
-
 func randomize():
 	size = randi_range(0, $Sprite2D.hframes - 1)
 	style = [0,1].pick_random()

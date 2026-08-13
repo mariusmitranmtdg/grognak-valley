@@ -8,6 +8,7 @@ var raining: bool:
 		$Layers/Particles/GPUParticles2D.emitting = value
 		$Layers/Particles/GPUParticles2D2.emitting = value
 var used_cells: Array[Vector2i]
+var projectile_scene = preload("res://scenes/machines/projectile.tscn")
 
 @export var rain_color: Color
 @export var daytime_color: Gradient
@@ -35,7 +36,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				pass
 		Enum.Tool.FISH:
 			if not grid_coord in $Layers/GrassMapLayer.get_used_cells():
-				print('peste!')
+				$Objects/Player.start_fishing()
 		Enum.Tool.SEED:
 			if has_soil and grid_coord not in used_cells:
 				var plant_res = PlantResource.new()
@@ -61,8 +62,9 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 
 func _ready() -> void:
 	Data.forecast_rain = [true, false].pick_random()
+	$Scarecrow.connect("shoot_projectile", create_projectile)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var daytime_point = 1 - ($Timers/DayTimer.time_left / $Timers/DayTimer.wait_time)
 	var color: Color
 	
@@ -72,8 +74,7 @@ func _process(delta: float) -> void:
 		color = daytime_color.sample(daytime_point)
 	$Overlay/DayTimeColor.color = color
 	
-	if Input.is_action_just_pressed("day_change"):
-		day_restart()
+
 
 func day_restart():
 	var tween = create_tween()
@@ -104,3 +105,13 @@ func _on_plant_death(coord: Vector2i):
 
 func _on_player_diagnose() -> void:
 	$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible
+
+
+func _on_player_day_change() -> void:
+	day_restart()
+
+func create_projectile(start_pos: Vector2, dir: Vector2):
+	pass
+	var projectile = projectile_scene.instantiate()
+	projectile.setup(start_pos, dir)
+	$Objects.add_child(projectile)

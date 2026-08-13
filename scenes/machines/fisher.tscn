@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://drbptkvju1amb"]
+
+[ext_resource type="PackedScene" uid="uid://7r64eqnfq7fl" path="res://scenes/machines/machine.tscn" id="1_3xeds"]
+[ext_resource type="Script" uid="uid://ck576mvwimbcr" path="res://scenes/machines/fisher.gd" id="2_54wso"]
+[ext_resource type="SpriteFrames" uid="uid://prqhluye08u2" path="res://premade/fisher.tres" id="2_k3aki"]
+[ext_resource type="Texture2D" uid="uid://k4r0km103lsj" path="res://graphics/ui/v_bar.png" id="3_54wso"]
+
+[node name="Fisher" unique_id=1989831701 instance=ExtResource("1_3xeds")]
+script = ExtResource("2_54wso")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1" unique_id=850134179]
+sprite_frames = ExtResource("2_k3aki")
+animation = &"down"
+
+[node name="Timer" type="Timer" parent="." index="2" unique_id=89933339]
+wait_time = 5.0
+one_shot = true
+
+[node name="Control" type="Control" parent="." index="3" unique_id=1950330151]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control" index="0" unique_id=2101713237]
+custom_minimum_size = Vector2(20, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+nine_patch_stretch = true
+texture_under = ExtResource("3_54wso")
+texture_progress = ExtResource("3_54wso")
+tint_under = Color(0.18039216, 0.18039216, 0.18039216, 1)
+tint_progress = Color(0.18031177, 0.665303, 0.17734554, 1)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

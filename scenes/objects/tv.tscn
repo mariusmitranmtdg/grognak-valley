@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://8sryekh2qhoi"]
+
+[ext_resource type="Script" uid="uid://dn5pfews041e3" path="res://tv.gd" id="1_auwve"]
+[ext_resource type="Texture2D" uid="uid://d4nnmlscu1se6" path="res://graphics/machines/tv.png" id="2_n1agy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf57i"]
+atlas = ExtResource("2_n1agy")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6lbw"]
+atlas = ExtResource("2_n1agy")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlo56"]
+atlas = ExtResource("2_n1agy")
+region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_auwve"]
+atlas = ExtResource("2_n1agy")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1agy"]
+atlas = ExtResource("2_n1agy")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_57qmd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf57i")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6lbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nlo56")
+}],
+"loop": 1,
+"name": &"rain",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_auwve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1agy")
+}],
+"loop": 1,
+"name": &"sun",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(16, 20)
+
+[node name="TV" type="StaticBody2D" unique_id=1782834620]
+collision_layer = 12
+collision_mask = 2
+script = ExtResource("1_auwve")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=989464192]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_57qmd")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1409164081]
+position = Vector2(0, -4)
+scale = Vector2(1.5, 1.5)
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="Timer" type="Timer" parent="." unique_id=487788120]
+wait_time = 2.229
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

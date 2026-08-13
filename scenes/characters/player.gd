@@ -5,11 +5,14 @@ extends CharacterBody2D
 
 var direction: Vector2
 var last_direction: Vector2
-var speed := 50
+var speed := 150
 var current_tool: Enum.Tool
 var current_seed: Enum.Seed
 var can_move: bool = true
+var current_state: Enum.State
+var current_style: Enum.Style
 
+signal day_change
 signal diagnose
 signal tool_use(tool: Enum.Tool, pos:Vector2)
 
@@ -30,9 +33,28 @@ func get_basic_input():
 		diagnose.emit()
 
 	if Input.is_action_just_pressed("action"):
-		tsm.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
-		$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		if not $RayCast2D.get_collider():
+			tsm.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
+			$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		else:
+			$RayCast2D.get_collider().interact(self)
+	
+	if Input.is_action_just_pressed("style_toggle"):
+		current_style = posmod(current_style + 1, Enum.Style.size() - 1) as Enum.Style
+		$Sprite2D.texture = Data.PLAYER_SKINS[current_style]
 
+func get_fishing_input():
+	if Input.is_action_just_pressed("action"):
+		$FishingGame.raise_bar()
+
+func start_fishing():
+	$Animation/AnimationTree.set("parameters/FishBlend/blend_amount", 1)
+	current_state = Enum.State.FISHING
+	$FishingGame.reveal()
+
+func stop_fishing():
+	current_state = Enum.State.DEFAULT
+	$Animation/AnimationTree.set("parameters/FishBlend/blend_amount", 0)
 
 func animate():
 	if direction:
@@ -40,6 +62,7 @@ func animate():
 		var animation_direction := Vector2(round(direction.x), round(direction.y))
 		$Animation/AnimationTree.set("parameters/MoveStateMachine/Idle/blend_position", animation_direction)
 		$Animation/AnimationTree.set("parameters/MoveStateMachine/Walk/blend_position", animation_direction)
+		$Animation/AnimationTree.set("parameters/FishBlendSpace2D/blend_position", animation_direction)
 		for animation in Data.TOOL_STATE_ANIMATIONS.values():
 			var animation_name: String =("parameters/ToolStateMachine/"+ animation +"/blend_position")
 			$Animation/AnimationTree.set(animation_name, animation_direction)
@@ -50,12 +73,19 @@ func tool_use_emit():
 	tool_use.emit(current_tool, position + last_direction * 16 + Vector2(0, 4))
 
 func _physics_process(_delta: float) -> void:
-	if can_move:
-		get_basic_input()
-		move()
-		animate()
+	match current_state:
+		Enum.State.DEFAULT:
+			if can_move:
+				get_basic_input()
+				move()
+				animate()
+		Enum.State.FISHING:
+				get_fishing_input()
+	
 	if direction:
 		last_direction = direction
+		var ray_y = int(direction.y) if not direction.x else 0
+		$RayCast2D.target_position = Vector2(direction.x, ray_y).normalized() * 20
 
 
 func _on_animation_tree_animation_started(_anim_name: StringName) -> void:

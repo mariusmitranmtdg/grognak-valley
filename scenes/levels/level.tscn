@@ -12,7 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://vem02mh7silc" path="res://scenes/objects/simple_object.tscn" id="9_icy5c"]
 [ext_resource type="Shader" uid="uid://2dfugyjih0oe" path="res://shaders/circle_transition.gdshader" id="9_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://gxfhn8vu2d0l" path="res://scenes/ui/plant_info_container.tscn" id="10_rmjfq"]
+[ext_resource type="PackedScene" uid="uid://jagwlsp7f7ck" path="res://scenes/machines/sprinkler.tscn" id="12_8iyoh"]
+[ext_resource type="PackedScene" uid="uid://drbptkvju1amb" path="res://scenes/machines/fisher.tscn" id="13_mq31s"]
 [ext_resource type="PackedScene" uid="uid://cqhykhx23v1su" path="res://scenes/levels/house.tscn" id="13_qogh7"]
+[ext_resource type="PackedScene" uid="uid://d158imc22rl57" path="res://scenes/characters/blob.tscn" id="16_5mi6g"]
+[ext_resource type="PackedScene" uid="uid://bofqkfrx24syk" path="res://scenes/machines/scarecrow.tscn" id="17_b8j7q"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
 offsets = PackedFloat32Array(0, 0.27659574, 0.5106383, 1)
@@ -928,7 +932,7 @@ y_sort_enabled = true
 
 [node name="Player" parent="Objects" unique_id=1123825297 instance=ExtResource("2_b2cq8")]
 z_index = 1
-position = Vector2(67, -16)
+position = Vector2(91, -106)
 
 [node name="SimpleObjects" type="Node2D" parent="Objects" unique_id=237900989]
 z_index = 1
@@ -1139,6 +1143,12 @@ position = Vector2(406, -319)
 [node name="Tree44" parent="Objects/Trees" unique_id=875354341 instance=ExtResource("7_mbbpy")]
 position = Vector2(398, -163)
 
+[node name="Sprinkler" parent="Objects" unique_id=1989831701 instance=ExtResource("12_8iyoh")]
+position = Vector2(6, -7)
+
+[node name="Fisher" parent="Objects" unique_id=771120173 instance=ExtResource("13_mq31s")]
+position = Vector2(29, -6)
+
 [node name="Overlay" type="Node2D" parent="." unique_id=1029971097]
 z_index = 4
 
@@ -1167,6 +1177,16 @@ wait_time = 180.0
 one_shot = true
 autostart = true
 
+[node name="Scarecrow" parent="." unique_id=113498649 instance=ExtResource("17_b8j7q")]
+position = Vector2(-14, -8)
+
+[node name="Blob" parent="." unique_id=466769426 instance=ExtResource("16_5mi6g")]
+position = Vector2(-207, 138)
+
+[node name="Blob2" parent="." unique_id=1179634091 instance=ExtResource("16_5mi6g")]
+position = Vector2(-48, 91)
+
 [connection signal="day_restarted" from="." to="Objects/Trees/Tree" method="_on_level_day_restarted"]
+[connection signal="day_change" from="Objects/Player" to="." method="_on_player_day_change"]
 [connection signal="diagnose" from="Objects/Player" to="." method="_on_player_diagnose"]
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

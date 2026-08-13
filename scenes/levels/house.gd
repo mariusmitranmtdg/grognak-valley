@@ -16,9 +16,9 @@ func _ready() -> void:
 		if $WallsLayer.get_cell_atlas_coords(cell) == Vector2i(0, 4):
 			door_coord = cell
 
-func _on_house_area_body_entered(body: Node2D) -> void:
+func _on_house_area_body_entered(_body: Node2D) -> void:
 	in_house = true
 
 
-func _on_house_area_body_exited(body: Node2D) -> void:
+func _on_house_area_body_exited(_body: Node2D) -> void:
 	in_house = false

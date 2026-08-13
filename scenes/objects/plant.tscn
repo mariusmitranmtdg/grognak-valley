@@ -25,12 +25,14 @@ height = 6.0
 radius = 13.038404
 
 [node name="Plant" type="StaticBody2D" unique_id=2027125716 groups=["Plants"]]
+y_sort_enabled = true
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_fvfks")
 res = SubResource("Resource_fvfks")
 
 [node name="FlashSprite2D" parent="." unique_id=23185921 instance=ExtResource("4_whlcx")]
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_yb5fs")
 hframes = 4
 

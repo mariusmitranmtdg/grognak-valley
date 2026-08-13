@@ -21,7 +21,7 @@ func texture_setup(enum_list: Array, textures: Dictionary, container: HBoxContai
 		container.add_child(tool_texture)
 		
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func reveal():

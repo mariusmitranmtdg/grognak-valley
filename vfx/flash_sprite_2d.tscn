@@ -10,5 +10,6 @@ shader_parameter/Color = Color(1, 1, 1, 1)
 shader_parameter/Progress = 0.0
 
 [node name="FlashSprite2D" type="Sprite2D" unique_id=23185921]
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_1ew4q")
 script = ExtResource("1_vt01l")

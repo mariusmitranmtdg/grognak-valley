@@ -4,6 +4,8 @@
 [ext_resource type="TileSet" uid="uid://cw45kfg2c8mfk" path="res://premade/HouseTileSet.tres" id="1_mfwd8"]
 [ext_resource type="Texture2D" uid="uid://dpvg3yddudamn" path="res://graphics/tilesets/walls_floor_tile.png" id="2_jfia5"]
 [ext_resource type="Texture2D" uid="uid://cwbhys0nypuq" path="res://graphics/tilesets/roof.png" id="4_jfia5"]
+[ext_resource type="PackedScene" uid="uid://bkxgkcxe1ojw0" path="res://scenes/objects/bed.tscn" id="5_4yql1"]
+[ext_resource type="PackedScene" uid="uid://8sryekh2qhoi" path="res://scenes/objects/tv.tscn" id="6_dc68u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ap60n"]
 texture = ExtResource("2_jfia5")
@@ -64,6 +66,12 @@ collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HouseArea" unique_id=330502469]
 polygon = PackedVector2Array(0, 0, 255, 0, 255, 125, 64, 126, 65, 139, 49, 138, 48, 126, 2, 125)
+
+[node name="Bed" parent="." unique_id=879470235 instance=ExtResource("5_4yql1")]
+position = Vector2(224, 84)
+
+[node name="TV" parent="." unique_id=1782834620 instance=ExtResource("6_dc68u")]
+position = Vector2(107, 34)
 
 [connection signal="body_entered" from="HouseArea" to="." method="_on_house_area_body_entered"]
 [connection signal="body_exited" from="HouseArea" to="." method="_on_house_area_body_exited"]
