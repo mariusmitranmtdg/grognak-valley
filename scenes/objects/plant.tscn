@@ -32,7 +32,6 @@ script = ExtResource("1_fvfks")
 res = SubResource("Resource_fvfks")
 
 [node name="FlashSprite2D" parent="." unique_id=23185921 instance=ExtResource("4_whlcx")]
-y_sort_enabled = true
 material = SubResource("ShaderMaterial_yb5fs")
 hframes = 4
 

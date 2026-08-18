@@ -102,6 +102,7 @@ _data = {
 }
 
 [node name="Blob" type="CharacterBody2D" unique_id=466769426 groups=["Enemies", "ObjectsS"]]
+y_sort_enabled = true
 collision_layer = 4
 script = ExtResource("1_xa0uo")
 

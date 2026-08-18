@@ -8,7 +8,10 @@ class_name PlantResource extends Resource
 @export var death_max: int = 3
 
 var age: float
-var death_count: int
+var death_count: int:
+	set(value):
+		death_count = value
+		emit_changed()
 var is_dead: bool:
 	set(value):
 		is_dead = value
@@ -23,6 +26,8 @@ func setup(seed_enum: Enum.Seed):
 	h_frames = Data.PLANT_DATA[seed_enum]["h_frames"]
 	death_max = Data.PLANT_DATA[seed_enum]["death_max"]
 
+func damage():
+	death_count += 1
 
 func grow(sprite: Sprite2D):
 	age += grow_speed

@@ -70,6 +70,7 @@ gravity = Vector3(0, 1, 0)
 color = Color(0.03314264, 0.8325972, 0.9007466, 1)
 
 [node name="Sprinkler" unique_id=1989831701 instance=ExtResource("1_rivgu")]
+y_sort_enabled = true
 script = ExtResource("2_4f0up")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=934809286]

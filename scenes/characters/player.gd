@@ -11,10 +11,12 @@ var current_seed: Enum.Seed
 var can_move: bool = true
 var current_state: Enum.State
 var current_style: Enum.Style
-
+var current_machine: Enum.Machine
 signal day_change
 signal diagnose
 signal tool_use(tool: Enum.Tool, pos:Vector2)
+signal build(current_machine: Enum.Machine)
+signal machine_changed(current_machine: Enum.Machine)
 
 func move():
 	direction = Input.get_vector("left", "right", "up", "down")
@@ -42,10 +44,25 @@ func get_basic_input():
 	if Input.is_action_just_pressed("style_toggle"):
 		current_style = posmod(current_style + 1, Enum.Style.size() - 1) as Enum.Style
 		$Sprite2D.texture = Data.PLAYER_SKINS[current_style]
+	
+	if Input.is_action_just_pressed("build"):
+		current_state = Enum.State.BUILDING
+		machine_changed.emit(current_machine)
 
 func get_fishing_input():
 	if Input.is_action_just_pressed("action"):
 		$FishingGame.raise_bar()
+
+func get_building_input():
+	if Input.is_action_just_pressed("build"):
+		current_state = Enum.State.DEFAULT
+	if Input.is_action_just_pressed("tool_backward") or Input.is_action_just_pressed("tool_forward"):
+		var dir = Input.get_axis("tool_backward", "tool_forward")
+		current_machine = posmod((current_machine + int(dir)), Enum.Machine.size()) as Enum.Machine
+		machine_changed.emit(current_machine)
+	if Input.is_action_just_pressed("action"):
+		build.emit(current_machine)
+		
 
 func start_fishing():
 	$Animation/AnimationTree.set("parameters/FishBlend/blend_amount", 1)
@@ -80,7 +97,12 @@ func _physics_process(_delta: float) -> void:
 				move()
 				animate()
 		Enum.State.FISHING:
-				get_fishing_input()
+			get_fishing_input()
+		Enum.State.BUILDING:
+			if can_move:
+				get_building_input()
+				move()
+				animate()
 	
 	if direction:
 		last_direction = direction
@@ -93,3 +115,10 @@ func _on_animation_tree_animation_started(_anim_name: StringName) -> void:
 
 func _on_animation_tree_animation_finished(_anim_name: StringName) -> void:
 	can_move = true
+
+func get_machine_coord() -> Vector2i:
+	var pos = position + last_direction * 20 + Vector2(0, 8)
+	var coord = Vector2i(pos.x / Data.TILE_SIZE, pos.y / Data.TILE_SIZE)
+	coord.x += -1 if pos.x < 0 else 0
+	coord.y += -1 if pos.y < 0 else 0
+	return coord * Data.TILE_SIZE + Vector2i(8, 8)

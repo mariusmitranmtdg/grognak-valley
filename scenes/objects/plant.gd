@@ -11,6 +11,12 @@ func setup(grid_coord: Vector2i, parent: Node2D, plant_res: PlantResource):
 	parent.add_child(self)
 	coord = grid_coord
 	$FlashSprite2D.texture = res.texture
+	res.connect("changed", update)
+
+func update():
+	if res.death_count >= res.death_max:
+		death.emit(coord)
+		queue_free()
 
 func grow(watered: bool):
 	if watered:
@@ -18,6 +24,8 @@ func grow(watered: bool):
 	else:
 		res.decay(self)
 
+func damage():
+	res.damage()
 
 func _on_collection_area_body_entered(body: Node2D) -> void:
 	if res.get_complete():

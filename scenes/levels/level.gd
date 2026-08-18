@@ -9,10 +9,24 @@ var raining: bool:
 		$Layers/Particles/GPUParticles2D2.emitting = value
 var used_cells: Array[Vector2i]
 var projectile_scene = preload("res://scenes/machines/projectile.tscn")
+var machine_scenes = {
+	Enum.Machine.SPRINKLER: preload("res://scenes/machines/sprinkler.tscn"),
+	Enum.Machine.SCARECROW: preload("res://scenes/machines/scarecrow.tscn"),
+	Enum.Machine.FISHER: preload("res://scenes/machines/fisher.tscn")
+}
+var blob_scene = preload("res://scenes/characters/blob.tscn")
+
+const MACHINE_PREVIEW_TEXTURES = {
+	Enum.Machine.SPRINKLER: {'texture':preload("res://graphics/icons/sprinkler.png"), 'offset': Vector2i(0,0)},
+	Enum.Machine.FISHER: {'texture':preload("res://graphics/icons/fisher.png"), 'offset': Vector2i(0,-4)},
+	Enum.Machine.SCARECROW: {'texture':preload("res://graphics/icons/scarecrow.png"), 'offset': Vector2i(0,-4)},
+	Enum.Machine.DELETE: {'texture':preload("res://graphics/icons/delete.png"), 'offset': Vector2i(0,0)}}
+	
 
 @export var rain_color: Color
 @export var daytime_color: Gradient
 @onready var daytransition_material = $Overlay/CanvasLayer/DayTransitionLayer.material
+@onready var player: CharacterBody2D = $Objects/Player
 
 signal day_restarted()
 
@@ -29,7 +43,6 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 					$Layers/SoilMapLayer.set_cells_terrain_connect([grid_coord], 0, 0)
 					if raining:
 						$Layers/WateredSoilMapLayer.set_cell(grid_coord, 0, Vector2i(randi_range(0, 2), 0))
-			print(pos, grid_coord)
 		Enum.Tool.WATER:
 			if has_soil:
 				$Layers/WateredSoilMapLayer.set_cell(grid_coord, 0, Vector2i(randi_range(0, 2), 0))
@@ -51,18 +64,15 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
 		Enum.Tool.AXE:
 			for object in get_tree().get_nodes_in_group('Objects'):
-				print(object.position.distance_to(pos))
 				if object.position.distance_to(pos) < 20:
 					object.hit(tool)
 		Enum.Tool.SWORD:
 			for object in get_tree().get_nodes_in_group('ObjectsS'):
-				print(object.position.distance_to(pos))
 				if object.position.distance_to(pos) < 20:
 					object.hit(tool)
 
 func _ready() -> void:
 	Data.forecast_rain = [true, false].pick_random()
-	$Scarecrow.connect("shoot_projectile", create_projectile)
 
 func _process(_delta: float) -> void:
 	var daytime_point = 1 - ($Timers/DayTimer.time_left / $Timers/DayTimer.wait_time)
@@ -73,6 +83,9 @@ func _process(_delta: float) -> void:
 	else:
 		color = daytime_color.sample(daytime_point)
 	$Overlay/DayTimeColor.color = color
+	
+	$Overlay/MachinePreviewSprite.visible = player.current_state == Enum.State.BUILDING
+	$Overlay/MachinePreviewSprite.position = player.get_machine_coord()
 	
 
 
@@ -92,7 +105,6 @@ func level_reset():
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
 	raining = Data.forecast_rain
 	Data.forecast_rain = [true, false].pick_random()
-	print("rain" if Data.forecast_rain else "sunny")
 	if raining:
 		for cell in $Layers/SoilMapLayer.get_used_cells():
 			$Layers/WateredSoilMapLayer.set_cell(cell, 0, Vector2i(randi_range(0, 2), 0))
@@ -100,7 +112,7 @@ func level_reset():
 
 func _on_plant_death(coord: Vector2i):
 	used_cells.erase(coord)
-	
+
 
 
 func _on_player_diagnose() -> void:
@@ -115,3 +127,35 @@ func create_projectile(start_pos: Vector2, dir: Vector2):
 	var projectile = projectile_scene.instantiate()
 	projectile.setup(start_pos, dir)
 	$Objects.add_child(projectile)
+
+
+func _on_player_build(current_machine: int) -> void:
+	if current_machine != Enum.Machine.DELETE:
+		var machine = machine_scenes[current_machine].instantiate()
+		machine.setup(player.get_machine_coord(), self, $Objects)
+		if machine.has_signal("shoot_projectile"):
+			machine.connect("shoot_projectile", create_projectile)
+	else:
+		for machine in get_tree().get_nodes_in_group("Machines"):
+			machine.delete(player.get_machine_coord() / 16)
+
+
+func _on_player_machine_changed(current_machine: int) -> void:
+	$Overlay/MachinePreviewSprite.texture = MACHINE_PREVIEW_TEXTURES[current_machine]['texture']
+
+func water_plants(coord: Vector2i):
+	const SOIL_DIRECTIONS = [
+		Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1),
+		Vector2i(-1,  0),Vector2i(1,0), Vector2i(-1,  1), 
+		Vector2i(0,  1), Vector2i(1,  1)]
+	for dir in SOIL_DIRECTIONS:
+		var cell = coord + dir
+		if cell in $Layers/SoilMapLayer.get_used_cells():
+			$Layers/WateredSoilMapLayer.set_cell(cell, 0, Vector2i(randi_range(0, 2), 0), 0)
+
+
+func _on_blob_timer_timeout() -> void:
+	var plants = get_tree().get_nodes_in_group("Plants")
+	if plants:
+		var blob = blob_scene.instantiate()
+		blob.setup($BlobSpawnPositions.get_children().pick_random().position, plants.pick_random(), $Objects)

@@ -12,11 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://vem02mh7silc" path="res://scenes/objects/simple_object.tscn" id="9_icy5c"]
 [ext_resource type="Shader" uid="uid://2dfugyjih0oe" path="res://shaders/circle_transition.gdshader" id="9_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://gxfhn8vu2d0l" path="res://scenes/ui/plant_info_container.tscn" id="10_rmjfq"]
-[ext_resource type="PackedScene" uid="uid://jagwlsp7f7ck" path="res://scenes/machines/sprinkler.tscn" id="12_8iyoh"]
-[ext_resource type="PackedScene" uid="uid://drbptkvju1amb" path="res://scenes/machines/fisher.tscn" id="13_mq31s"]
+[ext_resource type="Texture2D" uid="uid://cn4s3loq3j21r" path="res://graphics/characters/cat.png" id="13_mq31s"]
 [ext_resource type="PackedScene" uid="uid://cqhykhx23v1su" path="res://scenes/levels/house.tscn" id="13_qogh7"]
-[ext_resource type="PackedScene" uid="uid://d158imc22rl57" path="res://scenes/characters/blob.tscn" id="16_5mi6g"]
-[ext_resource type="PackedScene" uid="uid://bofqkfrx24syk" path="res://scenes/machines/scarecrow.tscn" id="17_b8j7q"]
+[ext_resource type="PackedScene" uid="uid://bj0b5gapbidjy" path="res://scenes/characters/character.tscn" id="14_8iyoh"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
 offsets = PackedFloat32Array(0, 0.27659574, 0.5106383, 1)
@@ -43,6 +41,7 @@ texture = ExtResource("3_b2cq8")
 0:0/0/terrains_peering_bit/right_side = 0
 0:0/0/terrains_peering_bit/bottom_right_corner = 0
 0:0/0/terrains_peering_bit/bottom_side = 0
+0:0/0/custom_data_1 = Vector2i(-1, 0)
 1:0/0 = 0
 1:0/0/terrain_set = 0
 1:0/0/terrain = 0
@@ -52,6 +51,7 @@ texture = ExtResource("3_b2cq8")
 1:0/0/terrains_peering_bit/bottom_side = 0
 1:0/0/terrains_peering_bit/bottom_left_corner = 0
 1:0/0/terrains_peering_bit/left_side = 0
+1:0/0/custom_data_1 = Vector2i(0, -1)
 2:0/0 = 0
 2:0/0/terrain_set = 0
 2:0/0/terrain = 0
@@ -59,6 +59,7 @@ texture = ExtResource("3_b2cq8")
 2:0/0/terrains_peering_bit/bottom_side = 0
 2:0/0/terrains_peering_bit/bottom_left_corner = 0
 2:0/0/terrains_peering_bit/left_side = 0
+2:0/0/custom_data_1 = Vector2i(1, 0)
 3:0/0 = 0
 3:0/0/terrain_set = 0
 3:0/0/terrain = 0
@@ -70,6 +71,7 @@ texture = ExtResource("3_b2cq8")
 4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, -8, 8, -8, 8, -4, -4, -4, -4, 8)
 4:0/0/terrains_peering_bit/right_side = 0
 4:0/0/terrains_peering_bit/bottom_side = 0
+4:0/0/custom_data_1 = Vector2i(-1, 0)
 5:0/0 = 0
 5:0/0/terrain_set = 0
 5:0/0/terrain = 0
@@ -78,6 +80,7 @@ texture = ExtResource("3_b2cq8")
 5:0/0/terrains_peering_bit/bottom_side = 0
 5:0/0/terrains_peering_bit/bottom_left_corner = 0
 5:0/0/terrains_peering_bit/left_side = 0
+5:0/0/custom_data_1 = Vector2i(0, -1)
 6:0/0 = 0
 6:0/0/terrain_set = 0
 6:0/0/terrain = 0
@@ -86,18 +89,21 @@ texture = ExtResource("3_b2cq8")
 6:0/0/terrains_peering_bit/bottom_right_corner = 0
 6:0/0/terrains_peering_bit/bottom_side = 0
 6:0/0/terrains_peering_bit/left_side = 0
+6:0/0/custom_data_1 = Vector2i(0, -1)
 7:0/0 = 0
 7:0/0/terrain_set = 0
 7:0/0/terrain = 0
 7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, 4, 8, 4, -4, -8, -4)
 7:0/0/terrains_peering_bit/bottom_side = 0
 7:0/0/terrains_peering_bit/left_side = 0
+7:0/0/custom_data_1 = Vector2i(1, 0)
 8:0/0 = 0
 8:0/0/terrain_set = 0
 8:0/0/terrain = 0
 8:0/0/terrains_peering_bit/right_side = 0
 8:0/0/terrains_peering_bit/bottom_side = 0
 8:0/0/terrains_peering_bit/left_side = 0
+8:0/0/custom_data_1 = Vector2i(0, -1)
 9:0/0 = 0
 9:0/0/terrain_set = 0
 9:0/0/terrain = 0
@@ -116,6 +122,7 @@ texture = ExtResource("3_b2cq8")
 0:1/0/terrains_peering_bit/bottom_side = 0
 0:1/0/terrains_peering_bit/top_side = 0
 0:1/0/terrains_peering_bit/top_right_corner = 0
+0:1/0/custom_data_1 = Vector2i(-1, 0)
 1:1/0 = 0
 1:1/0/terrain_set = 0
 1:1/0/terrain = 0
@@ -137,11 +144,13 @@ texture = ExtResource("3_b2cq8")
 2:1/0/terrains_peering_bit/left_side = 0
 2:1/0/terrains_peering_bit/top_left_corner = 0
 2:1/0/terrains_peering_bit/top_side = 0
+2:1/0/custom_data_1 = Vector2i(1, 0)
 3:1/0 = 0
 3:1/0/terrain_set = 0
 3:1/0/terrain = 0
 3:1/0/terrains_peering_bit/bottom_side = 0
 3:1/0/terrains_peering_bit/top_side = 0
+3:1/0/custom_data_1 = Vector2i(1, 0)
 4:1/0 = 0
 4:1/0/terrain_set = 0
 4:1/0/terrain = 0
@@ -149,6 +158,7 @@ texture = ExtResource("3_b2cq8")
 4:1/0/terrains_peering_bit/bottom_side = 0
 4:1/0/terrains_peering_bit/top_side = 0
 4:1/0/terrains_peering_bit/top_right_corner = 0
+4:1/0/custom_data_1 = Vector2i(-1, 0)
 5:1/0 = 0
 5:1/0/terrain_set = 0
 5:1/0/terrain = 0
@@ -176,6 +186,7 @@ texture = ExtResource("3_b2cq8")
 7:1/0/terrains_peering_bit/left_side = 0
 7:1/0/terrains_peering_bit/top_left_corner = 0
 7:1/0/terrains_peering_bit/top_side = 0
+7:1/0/custom_data_1 = Vector2i(1, 0)
 8:1/0 = 0
 8:1/0/terrain_set = 0
 8:1/0/terrain = 0
@@ -201,6 +212,7 @@ texture = ExtResource("3_b2cq8")
 0:2/0/terrains_peering_bit/right_side = 0
 0:2/0/terrains_peering_bit/top_side = 0
 0:2/0/terrains_peering_bit/top_right_corner = 0
+0:2/0/custom_data_1 = Vector2i(-1, 0)
 1:2/0 = 0
 1:2/0/terrain_set = 0
 1:2/0/terrain = 0
@@ -210,6 +222,7 @@ texture = ExtResource("3_b2cq8")
 1:2/0/terrains_peering_bit/top_left_corner = 0
 1:2/0/terrains_peering_bit/top_side = 0
 1:2/0/terrains_peering_bit/top_right_corner = 0
+1:2/0/custom_data_1 = Vector2i(0, 1)
 2:2/0 = 0
 2:2/0/terrain_set = 0
 2:2/0/terrain = 0
@@ -217,6 +230,7 @@ texture = ExtResource("3_b2cq8")
 2:2/0/terrains_peering_bit/left_side = 0
 2:2/0/terrains_peering_bit/top_left_corner = 0
 2:2/0/terrains_peering_bit/top_side = 0
+2:2/0/custom_data_1 = Vector2i(1, 0)
 3:2/0 = 0
 3:2/0/terrain_set = 0
 3:2/0/terrains_peering_bit/top_side = 0
@@ -227,6 +241,7 @@ texture = ExtResource("3_b2cq8")
 4:2/0/terrains_peering_bit/bottom_right_corner = 0
 4:2/0/terrains_peering_bit/bottom_side = 0
 4:2/0/terrains_peering_bit/top_side = 0
+4:2/0/custom_data_1 = Vector2i(-1, 0)
 5:2/0 = 0
 5:2/0/terrain_set = 0
 5:2/0/terrain = 0
@@ -254,6 +269,7 @@ texture = ExtResource("3_b2cq8")
 7:2/0/terrains_peering_bit/bottom_left_corner = 0
 7:2/0/terrains_peering_bit/left_side = 0
 7:2/0/terrains_peering_bit/top_side = 0
+7:2/0/custom_data_1 = Vector2i(1, 0)
 8:2/0 = 0
 8:2/0/terrain_set = 0
 8:2/0/terrain = 0
@@ -283,15 +299,18 @@ texture = ExtResource("3_b2cq8")
 0:3/0/terrain_set = 0
 0:3/0/terrain = 0
 0:3/0/terrains_peering_bit/right_side = 0
+0:3/0/custom_data_1 = Vector2i(-1, 0)
 1:3/0 = 0
 1:3/0/terrain_set = 0
 1:3/0/terrain = 0
 1:3/0/terrains_peering_bit/right_side = 0
 1:3/0/terrains_peering_bit/left_side = 0
+1:3/0/custom_data_1 = Vector2i(0, 1)
 2:3/0 = 0
 2:3/0/terrain_set = 0
 2:3/0/terrain = 0
 2:3/0/terrains_peering_bit/left_side = 0
+2:3/0/custom_data_1 = Vector2i(1, 0)
 3:3/0 = 0
 3:3/0/terrain_set = 0
 3:3/0/terrain = 0
@@ -301,6 +320,7 @@ texture = ExtResource("3_b2cq8")
 4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 8, -8, 8, -8, -8, -4, -8, -4, 4, 8, 4)
 4:3/0/terrains_peering_bit/right_side = 0
 4:3/0/terrains_peering_bit/top_side = 0
+4:3/0/custom_data_1 = Vector2i(-1, 0)
 5:3/0 = 0
 5:3/0/terrain_set = 0
 5:3/0/terrain = 0
@@ -308,6 +328,7 @@ texture = ExtResource("3_b2cq8")
 5:3/0/terrains_peering_bit/left_side = 0
 5:3/0/terrains_peering_bit/top_left_corner = 0
 5:3/0/terrains_peering_bit/top_side = 0
+5:3/0/custom_data_1 = Vector2i(0, 1)
 6:3/0 = 0
 6:3/0/terrain_set = 0
 6:3/0/terrain = 0
@@ -315,18 +336,21 @@ texture = ExtResource("3_b2cq8")
 6:3/0/terrains_peering_bit/left_side = 0
 6:3/0/terrains_peering_bit/top_side = 0
 6:3/0/terrains_peering_bit/top_right_corner = 0
+6:3/0/custom_data_1 = Vector2i(0, 1)
 7:3/0 = 0
 7:3/0/terrain_set = 0
 7:3/0/terrain = 0
 7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -8, 8, -8, 4, 4, 4, 4, -8)
 7:3/0/terrains_peering_bit/left_side = 0
 7:3/0/terrains_peering_bit/top_side = 0
+7:3/0/custom_data_1 = Vector2i(1, 0)
 8:3/0 = 0
 8:3/0/terrain_set = 0
 8:3/0/terrain = 0
 8:3/0/terrains_peering_bit/right_side = 0
 8:3/0/terrains_peering_bit/left_side = 0
 8:3/0/terrains_peering_bit/top_side = 0
+8:3/0/custom_data_1 = Vector2i(0, 1)
 9:3/0 = 0
 9:3/0/terrain_set = 0
 9:3/0/terrain = 0
@@ -401,6 +425,7 @@ texture = ExtResource("3_b2cq8")
 4:4/0/terrains_peering_bit/right_side = 0
 4:4/0/terrains_peering_bit/bottom_side = 0
 4:4/0/terrains_peering_bit/top_side = 0
+4:4/0/custom_data_1 = Vector2i(-1, 0)
 5:4/0 = 0
 5:4/0/terrain_set = 0
 5:4/0/terrain = 0
@@ -425,6 +450,7 @@ texture = ExtResource("3_b2cq8")
 7:4/0/terrains_peering_bit/bottom_side = 0
 7:4/0/terrains_peering_bit/left_side = 0
 7:4/0/terrains_peering_bit/top_side = 0
+7:4/0/custom_data_1 = Vector2i(1, 0)
 8:4/0 = 0
 8:4/0/terrain_set = 0
 8:4/0/terrain = 0
@@ -441,6 +467,8 @@ terrain_set_0/terrain_0/name = "Grass"
 terrain_set_0/terrain_0/color = Color(0.124189265, 0.45919383, 0.21607158, 1)
 custom_data_layer_0/name = "farmable"
 custom_data_layer_0/type = 1
+custom_data_layer_1/name = "coast"
+custom_data_layer_1/type = 6
 sources/0 = SubResource("TileSetAtlasSource_xb4v1")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b2cq8"]
@@ -1143,11 +1171,10 @@ position = Vector2(406, -319)
 [node name="Tree44" parent="Objects/Trees" unique_id=875354341 instance=ExtResource("7_mbbpy")]
 position = Vector2(398, -163)
 
-[node name="Sprinkler" parent="Objects" unique_id=1989831701 instance=ExtResource("12_8iyoh")]
-position = Vector2(6, -7)
-
-[node name="Fisher" parent="Objects" unique_id=771120173 instance=ExtResource("13_mq31s")]
-position = Vector2(29, -6)
+[node name="Character" parent="Objects" unique_id=1112844088 instance=ExtResource("14_8iyoh")]
+z_index = 1
+position = Vector2(-47, -97)
+etexture = ExtResource("13_mq31s")
 
 [node name="Overlay" type="Node2D" parent="." unique_id=1029971097]
 z_index = 4
@@ -1170,6 +1197,9 @@ color = Color(0.11858138, 0.11858138, 0.11858138, 1)
 [node name="PlantInfoContainer" parent="Overlay/CanvasLayer" unique_id=300365223 instance=ExtResource("10_rmjfq")]
 z_index = 4
 
+[node name="MachinePreviewSprite" type="Sprite2D" parent="Overlay" unique_id=947436618]
+visible = false
+
 [node name="Timers" type="Node2D" parent="." unique_id=175593646]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=192678867]
@@ -1177,16 +1207,49 @@ wait_time = 180.0
 one_shot = true
 autostart = true
 
-[node name="Scarecrow" parent="." unique_id=113498649 instance=ExtResource("17_b8j7q")]
-position = Vector2(-14, -8)
+[node name="BlobTimer" type="Timer" parent="Timers" unique_id=244846276]
+wait_time = 2.0
+autostart = true
 
-[node name="Blob" parent="." unique_id=466769426 instance=ExtResource("16_5mi6g")]
-position = Vector2(-207, 138)
+[node name="BlobSpawnPositions" type="Node2D" parent="." unique_id=1220848889]
 
-[node name="Blob2" parent="." unique_id=1179634091 instance=ExtResource("16_5mi6g")]
-position = Vector2(-48, 91)
+[node name="Marker2D" type="Marker2D" parent="BlobSpawnPositions" unique_id=763047023]
+position = Vector2(-181, 65)
+
+[node name="Marker2D2" type="Marker2D" parent="BlobSpawnPositions" unique_id=106566678]
+position = Vector2(-358, -81)
+
+[node name="Marker2D3" type="Marker2D" parent="BlobSpawnPositions" unique_id=549252563]
+position = Vector2(-422, 123)
+
+[node name="Marker2D4" type="Marker2D" parent="BlobSpawnPositions" unique_id=737891538]
+position = Vector2(141, 146)
+
+[node name="Marker2D5" type="Marker2D" parent="BlobSpawnPositions" unique_id=677034305]
+position = Vector2(315, -101)
+
+[node name="Marker2D6" type="Marker2D" parent="BlobSpawnPositions" unique_id=1581237664]
+position = Vector2(466, -334)
+
+[node name="Marker2D7" type="Marker2D" parent="BlobSpawnPositions" unique_id=1232417533]
+position = Vector2(-137, -340)
+
+[node name="Marker2D8" type="Marker2D" parent="BlobSpawnPositions" unique_id=1767332166]
+position = Vector2(-767, 29)
+
+[node name="Marker2D9" type="Marker2D" parent="BlobSpawnPositions" unique_id=880278710]
+position = Vector2(-329, 296)
+
+[node name="Marker2D10" type="Marker2D" parent="BlobSpawnPositions" unique_id=976864226]
+position = Vector2(-180, 441)
+
+[node name="Marker2D11" type="Marker2D" parent="BlobSpawnPositions" unique_id=315611025]
+position = Vector2(-33, 322)
 
 [connection signal="day_restarted" from="." to="Objects/Trees/Tree" method="_on_level_day_restarted"]
+[connection signal="build" from="Objects/Player" to="." method="_on_player_build"]
 [connection signal="day_change" from="Objects/Player" to="." method="_on_player_day_change"]
 [connection signal="diagnose" from="Objects/Player" to="." method="_on_player_diagnose"]
+[connection signal="machine_changed" from="Objects/Player" to="." method="_on_player_machine_changed"]
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
+[connection signal="timeout" from="Timers/BlobTimer" to="." method="_on_blob_timer_timeout"]

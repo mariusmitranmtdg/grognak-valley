@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cv5mm4i7scrv6" path="res://graphics/machines/scarecrow.png" id="3_chruw"]
 
 [node name="Scarecrow" unique_id=1989831701 instance=ExtResource("1_t3vp4")]
+y_sort_enabled = true
 script = ExtResource("2_rtb2u")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="1" unique_id=976804721]
